@@ -12,7 +12,6 @@ AccountModel.init(
       type: INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
     },
     balance: {
       type: INTEGER,

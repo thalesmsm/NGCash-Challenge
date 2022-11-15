@@ -1,11 +1,14 @@
 import { Request, Response } from 'express';
+import AccountService from '../services/Account.service';
 import UserService from '../services/User.service';
 
 export default class UserController {
   userService: UserService;
+  accountService: AccountService;
 
   constructor() {
     this.userService = new UserService();
+    this.accountService = new AccountService();
   }
 
   createUser = async (req: Request, res: Response) => {
@@ -32,6 +35,7 @@ export default class UserController {
     }
 
     await this.userService.createUser(username, password, accountId);
+    await this.accountService.createAccount(accountId, 100)
 
     return res.status(201).json({
       message: 'User created',
