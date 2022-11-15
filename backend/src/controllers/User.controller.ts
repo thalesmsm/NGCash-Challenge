@@ -10,7 +10,10 @@ export default class UserController {
 
   createUser = async (req: Request, res: Response) => {
     const { body } = req;
-    const { username, password, accountId } = body; 
+    const { username, password } = body;
+    const users = await this.userService.getAllUsers();
+    const lastUser = users[users.length - 1];
+    const accountId = lastUser.accountId + 1;
 
     const validPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{7,}$/;
 
