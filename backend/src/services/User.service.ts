@@ -9,13 +9,12 @@ class UserService {
     return user;
   }
 
-  // CRIADO PARA TESTAR HASH DA SENHA
-
-  // public async createUser(body: any) {
-  //   const user = await this.userModel.create(body);
+  public async createUser(username: string, password: string, accountId: number) {
     
-  //   return user;
-  // }
+    const user = await this.userModel.create({username, password, accountId});
+    
+    return user;
+  }
 }
 
 export default UserService;

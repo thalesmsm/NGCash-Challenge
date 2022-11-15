@@ -29,7 +29,6 @@ UserModel.init(
     accountId: {
       type: INTEGER,
       allowNull: false,
-      autoIncrement: true,
     }
   },
   {
@@ -42,12 +41,12 @@ UserModel.init(
         const salt = await genSalt()
         user.password = await hash(user.password, salt)
       },
-      beforeUpdate: async (user, options: UpdateOptions) => {
-        if (user.changed('password')) {
-          const salt = await genSalt()
-          user.password = await hash(user.password, salt)
-        }
-      }
+      // beforeUpdate: async (user, options: UpdateOptions) => {
+      //   if (user.changed('password')) {
+      //     const salt = await genSalt()
+      //     user.password = await hash(user.password, salt)
+      //   }
+      // }
     }
   },
 );
