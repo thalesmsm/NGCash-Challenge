@@ -1,4 +1,5 @@
-import { Model, INTEGER, STRING } from 'sequelize';
+import { Model, INTEGER, STRING, CreateOptions, UpdateOptions } from 'sequelize';
+import { genSalt, hash } from 'bcryptjs';
 import db from '.';
 import AccountModel from './Account.model';
 
@@ -28,6 +29,7 @@ UserModel.init(
     accountId: {
       type: INTEGER,
       allowNull: false,
+      autoIncrement: true,
     }
   },
   {
@@ -35,6 +37,18 @@ UserModel.init(
     modelName: 'UserModel',
     tableName: 'users',
     timestamps: false,
+    hooks: {
+      beforeCreate: async (user, options: CreateOptions) => {
+        const salt = await genSalt()
+        user.password = await hash(user.password, salt)
+      },
+      beforeUpdate: async (user, options: UpdateOptions) => {
+        if (user.changed('password')) {
+          const salt = await genSalt()
+          user.password = await hash(user.password, salt)
+        }
+      }
+    }
   },
 );
 
