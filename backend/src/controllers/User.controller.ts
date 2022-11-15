@@ -12,12 +12,18 @@ export default class UserController {
     const { body } = req;
     const { username, password } = body;
     const users = await this.userService.getAllUsers();
-    const lastUser = users[users.length - 1];
-    const accountId = lastUser.accountId + 1;
+    let accountId = 0;
+    
+    if (users.length === 0) {
+      accountId = 1;
+    } else {
+      const lastUser = users[users.length - 1];
+      accountId = lastUser.accountId + 1;
+    }
 
     const validPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{7,}$/;
 
-    if (username.length < 3) return res.status(201).json({message: 'Username must be at least 3 characters'})
+    if (username.length < 3) return res.status(201).json({message: 'Username must be at least 3 characters'});
 
     if (!validPassword.test(password)) {
       return res.status(401).json({ 
@@ -34,6 +40,6 @@ export default class UserController {
         password,
         accountId
       }
-    })
+    });
   }
 }
