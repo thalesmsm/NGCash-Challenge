@@ -2,8 +2,9 @@ import { Model, INTEGER, STRING, CreateOptions, UpdateOptions } from 'sequelize'
 import { genSalt, hash } from 'bcryptjs';
 import db from '.';
 import AccountModel from './Account.model';
+import IUser from '../../interfaces/IUser';
 
-class UserModel extends Model {
+class UserModel extends Model<IUser> {
   declare id: number;
   declare username: string;
   declare password: string;

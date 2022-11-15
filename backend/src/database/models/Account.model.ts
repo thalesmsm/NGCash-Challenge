@@ -1,7 +1,8 @@
 import { Model, INTEGER } from 'sequelize';
 import db from '.';
+import IAccount from '../../interfaces/IAccount';
 
-class AccountModel extends Model {
+class AccountModel extends Model<IAccount> {
   declare id: number;
   declare balance: number;
 }
@@ -25,6 +26,5 @@ AccountModel.init(
     timestamps: false,
   },
 );
-
 
 export default AccountModel;

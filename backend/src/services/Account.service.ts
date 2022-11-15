@@ -9,6 +9,12 @@ class AccountService {
     return accounts;
   }
 
+  public async getAccountById(id: number) {
+    const account = await this.accountModel.findOne({ where: { id } });
+    
+    return account;
+  }
+
 
   public async createAccount(id: number, balance: number) {
     
