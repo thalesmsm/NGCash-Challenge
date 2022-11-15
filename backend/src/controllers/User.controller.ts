@@ -17,9 +17,11 @@ export default class UserController {
 
     const validPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{7,}$/;
 
+    if (username.length < 3) return res.status(201).json({message: 'Username must be at least 3 characters'})
+
     if (!validPassword.test(password)) {
       return res.status(401).json({ 
-        message: 'Password must be minimum eight characters, at least one uppercase letter and one number' 
+        message: 'Password must be minimum 8 characters, at least 1 uppercase letter and 1 number' 
       });
     }
 
