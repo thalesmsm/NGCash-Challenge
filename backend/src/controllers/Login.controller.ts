@@ -1,6 +1,6 @@
 import { compare } from 'bcryptjs';
 import { Request, Response } from 'express';
-import decodeToken, { generateToken } from '../utils/tokenManipulation';
+import { generateToken } from '../utils/tokenManipulation';
 import UserService from '../services/User.service';
 
 const userService = new UserService();
@@ -28,14 +28,14 @@ async function login(req: Request, res: Response) {
   res.status(200).json({ token });
 }
 
-async function validateLogin(req: Request, res: Response) {
-  const { authorization } = req.headers;
+// async function validateLogin(req: Request, res: Response) {
+//   const { authorization } = req.headers;
 
-  if (authorization) {
-    const { role } = decodeToken(authorization);
-    return res.status(200).json({ role });
-  }
-  return res.status(401).json({ message: 'Unauthorized' });
-}
+//   if (authorization) {
+//     const { username } = decodeToken(authorization);
+//     return res.status(200).json({ username });
+//   }
+//   return res.status(401).json({ message: 'Unauthorized' });
+// }
 
-export { login, validateLogin };
+export { login };
