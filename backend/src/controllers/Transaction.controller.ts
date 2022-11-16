@@ -25,9 +25,9 @@ class TransactionController {
     const debitedAccountBalance = debitedAccount.balance - body.value;
     
     const creditedAccount = await this.accountService.getAccountById(Number(body.creditedAccountId));
-    const creditedAccountBalance = creditedAccount.balance + body.value;
+    const creditedAccountBalance = creditedAccount.balance + body.value;    
 
-    if (debitedAccount.id === body.debitedAccountId) res.status(401).json({ message: 'Transaction Unauthorized'});
+    if (debitedAccount.id === body.creditedAccountId) return res.status(401).json({ message: 'Transaction Unauthorized'});
     if (body.value > debitedAccount.balance) return res.status(401).json({ message: 'Insufficient funds' });
 
     try {
