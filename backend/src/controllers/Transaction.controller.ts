@@ -39,6 +39,13 @@ class TransactionController {
       next(error);
     }
   }
+
+  public getTransactions = async (req: Request, res: Response) => {
+    const {id} = req.params;
+    const transactions = await this.transactionService.getTransactions(Number(id));
+
+    return res.status(200).json({transactions});
+  }
 }
 
 export default TransactionController;

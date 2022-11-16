@@ -13,6 +13,12 @@ class TransactionService {
 
     return transaction;
   }
+
+  public async getTransactions(debitedAccountId: number): Promise<ITransaction[]> {
+    const transactions = await this.transactionModel.findAll({ where: { debitedAccountId } });
+
+    return transactions;
+  }
 }
 
 
