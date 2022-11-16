@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import ITransaction from '../Interfaces/ITransaction';
+import ITransaction from '../interfaces/ITransaction';
 import AccountService from '../services/Account.service';
 import TransactionService from '../services/Transaction.service';
 
@@ -26,6 +26,9 @@ class TransactionController {
     
     const creditedAccount = await this.accountService.getAccountById(Number(body.creditedAccountId));
     const creditedAccountBalance = creditedAccount.balance + body.value;
+
+    if (debitedAccount.id === body.debitedAccountId) res.status(401).json({ message: 'Transaction Unauthorized'});
+    if (body.value > debitedAccount.balance) return res.status(401).json({ message: 'Insufficient funds' });
 
     try {
       const newTransaction = await this.transactionService.createTransaction(transaction);

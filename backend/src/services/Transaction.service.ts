@@ -1,6 +1,5 @@
 import TransactionModel from '../database/models/Transaction.model';
-// import Transaction from '../Domain/Transaction';
-import ITransaction from '../Interfaces/ITransaction';
+import ITransaction from '../interfaces/ITransaction';
 
 class TransactionService {
   public transactionModel = TransactionModel;
