@@ -30,6 +30,10 @@ UserModel.init(
     accountId: {
       type: INTEGER,
       allowNull: false,
+      references: {
+        model: 'AccountModel',
+        key: 'id',
+      },
     }
   },
   {

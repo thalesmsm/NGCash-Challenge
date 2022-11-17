@@ -47,4 +47,10 @@ export default class UserController {
       }
     });
   }
+
+  getAllUsers = async (req: Request, res: Response) => {
+    const users = await this.userService.getAllUsers();
+
+    return res.status(200).json(users)
+  }
 }

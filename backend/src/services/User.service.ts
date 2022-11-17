@@ -1,3 +1,4 @@
+import AccountModel from '../database/models/Account.model';
 import UserModel from '../database/models/User.model';
 import IUser from '../interfaces/IUser';
 
@@ -5,7 +6,14 @@ class UserService {
   public userModel = UserModel;
 
   public async getAllUsers(): Promise<IUser[]> {
-    const users = await this.userModel.findAll();
+    const users = await this.userModel.findAll({
+      include: [{
+        model: AccountModel,
+        as: 'account',
+        attributes: ['balance'],
+      }],
+    }
+    );
     
     return users;
   }

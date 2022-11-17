@@ -44,7 +44,7 @@ class TransactionController {
     const {id} = req.params;
     const transactions = await this.transactionService.getTransactions(Number(id));
 
-    return res.status(200).json({transactions});
+    return res.status(200).json(transactions);
   }
 }
 

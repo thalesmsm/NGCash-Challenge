@@ -24,11 +24,19 @@ TransactionModel.init(
     },
     debitedAccountId: {
       type: INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'AccountModel',
+        key: 'id',
+      },
     },
     creditedAccountId: {
       type: INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'AccountModel',
+        key: 'id',
+      },
     }
     ,
     createdAt: {

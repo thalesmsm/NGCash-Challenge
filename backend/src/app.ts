@@ -12,6 +12,7 @@ app.use(express.json());
 
 app.use('/login', loginRouter);
 app.use('/register', userRouter);
+app.use('/users', userRouter);
 app.use('/account', authorized, accountRouter);
 app.use('/transaction', authorized, transactionRouter);
 
