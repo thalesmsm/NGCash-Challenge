@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import authorized from './middlewares/authorized';
 import errorMiddleware from './middlewares/errorMiddleware';
 import accountRouter from './routes/Account.router';
@@ -9,6 +10,7 @@ import userRouter from './routes/User.router';
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/login', loginRouter);
 app.use('/register', userRouter);

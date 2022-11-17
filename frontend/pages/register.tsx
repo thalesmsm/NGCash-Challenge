@@ -34,7 +34,7 @@ const Register = () => {
       </Head>
       <nav className="container flex justify-between px-4 py-8 mx-auto">
         <div>
-        <Image src="/logo-ngcash.svg" width={80} height={80} alt="ng Logo" className="lg:w-28 lg:h-28"/>
+        <Image src="/logo-ngcash.svg" width={80} height={80} alt="ng Logo"/>
         </div>
         <div className="hidden space-x-8 lg:flex lg:items-center">
           <a href="#">Menu 1</a>
