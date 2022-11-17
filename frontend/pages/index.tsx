@@ -63,12 +63,27 @@ const Login: React.FC = () => {
       </Head>      
       <nav className="container flex justify-between px-4 py-8 mx-auto">
         <div>
-        <Image src="/logo-ngcash.svg" width={80} height={80} alt="ng Logo" />
+        <Image src="/logo-ngcash.svg" width={90} height={90} alt="ng Logo" />
         </div>
         <div className="hidden space-x-8 lg:flex lg:items-center">
-          <a href="#">Sobre Nós</a>
-          <a href="#">Contato</a>
-          <a href="#">Trabalhe conosco</a>
+          <a
+            href="#"
+            className="bg-gradient-to-br from-gray-400 to-gray-600 text-white font-bold py-2 px-4 rounded hover:bg-gradient-to-br hover:from-gray-500 hover:to-gray-700"
+          >
+            Sobre Nós
+          </a>
+          <a
+            href="#"
+            className="bg-gradient-to-br from-gray-400 to-gray-600 text-white font-bold py-2 px-4 rounded hover:bg-gradient-to-br hover:from-gray-500 hover:to-gray-700"
+          >
+            Contato
+          </a>
+          <a
+            href="#"
+            className="bg-gradient-to-br from-gray-400 to-gray-600 text-white font-bold py-2 px-4 rounded hover:bg-gradient-to-br hover:from-gray-500 hover:to-gray-700"
+          >
+            Fale Conosco
+          </a>
         </div>
         <div className="flex lg:hidden">
           <div className="space-y-2">
@@ -110,7 +125,7 @@ const Login: React.FC = () => {
             </div>
             <div className="flex items-center justify-between">
               <button
-                className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-28 md:w-36"
+                className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded w-1/2 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-700"
                 type="button"
                 onClick={handleClickEntrar}
                 >
@@ -118,7 +133,7 @@ const Login: React.FC = () => {
               </button>
               <Link href="/register">
                 <button
-                  className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-28 md:w-36"
+                  className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded w-40 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-700"
                   type="button"
                   >
                   Cadastrar
