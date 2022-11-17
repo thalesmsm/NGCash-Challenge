@@ -1,19 +1,15 @@
-import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
-interface Login {
-  username: string;
-  password: string;
-}
-
-const Login: React.FC = () => {
+const Register = () => {
   const [username, setUsername] = useState<string>();
   const [password, setPassword] = useState<string>();
-  const [isUsernameValid, setIsUsernameValid] = useState<boolean>();
-  const [isPasswordValid, setisPasswordValid] = useState<boolean>();
-  
+  const [isUsernameValid, setIsUsernameValid] = useState<boolean>(true);
+  const [isPasswordValid, setisPasswordValid] = useState<boolean>(true);
+  const validPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+
   const handleChangeName = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     setUsername(newValue);
@@ -22,6 +18,11 @@ const Login: React.FC = () => {
   const handleChangePassword = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     setPassword(newValue);
+  }
+
+  const handleClickCadastrar = () => {
+    {username && username.length >= 3 ? setIsUsernameValid(true) : setIsUsernameValid(false)}
+    {password && validPassword.test(password) ? setisPasswordValid(true) : setisPasswordValid(false)}
   }
 
   return (
@@ -52,11 +53,11 @@ const Login: React.FC = () => {
       <main>
         <div className="w-full max-w-xs mx-auto md:max-w-none md:flex md:justify-around md:items-center">
           <div className="hidden lg:block md:block md:w-[530px] md:h-[530px]">
-            <Image src="/transfer-money.svg" width={530} height={530} alt="ng Logo"/>
+            <Image src="/register-img.svg" width={530} height={530} alt="ng Logo"/>
           </div>
-          <form className="flex flex-col justify-center bg-white/60 shadow-md rounded-lg px-8 md:w-[400px] h-[480px]">
+          <form className="flex flex-col justify-center bg-white/60 shadow-md rounded-lg px-8 max-w-md md:w-[400px] h-[480px]">
             <div className="mb-6">
-              <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="username">
+            <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="username">
                 Username
               </label>
               <input
@@ -66,10 +67,10 @@ const Login: React.FC = () => {
                 placeholder="Username"
                 onChange={handleChangeName}
               />
-              <p className={`${isUsernameValid ? "text-transparent" : "text-red-500"} text-xs italic`}>Por favor confira seu Username.</p>
+              <p className={`${isUsernameValid ? "text-transparent" : "text-red-500"} text-xs italic`}>Seu Username deve conter pelo menos 3 caracteres.</p>
             </div>
             <div className="mb-6">
-              <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="password">
+            <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="password">
                 Senha
               </label>
               <input
@@ -79,22 +80,18 @@ const Login: React.FC = () => {
                 placeholder="********"
                 onChange={handleChangePassword}
               />
-              <p className={`${isPasswordValid ? "text-transparent" : "text-red-500"} text-xs italic`}>Por favor confira sua senha.</p>
+              <p className={`${isPasswordValid ? "text-transparent" : "text-red-500"} text-xs italic`}>Sua senha deve conter: no mínimo 8 caracteres, um número e uma letra maiúscula.</p>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col items-center justify-around h-20">
               <button
-                className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-28 md:w-36"
+                className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-52"
                 type="button"
+                onClick={handleClickCadastrar}
                 >
-                Entrar
+                Cadastrar
               </button>
-              <Link href="/register">
-                <button
-                  className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-28 md:w-36"
-                  type="button"
-                  >
-                  Cadastrar
-                </button>
+              <Link href="/">
+                <p className="text-decoration-none text-black hover:text-gray-700">Já tenho cadastro</p>
               </Link>
             </div>
           </form>
@@ -104,4 +101,4 @@ const Login: React.FC = () => {
   );
 }
 
-export default Login;
+export default Register;
