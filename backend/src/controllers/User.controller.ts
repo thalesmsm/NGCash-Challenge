@@ -24,7 +24,7 @@ export default class UserController {
       accountId = lastUser.accountId + 1;
     }
     
-    const validPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{7,}$/;
+    const validPassword = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
     
     if (username.length < 3) return res.status(201).json({message: 'Username must be at least 3 characters'});
     
