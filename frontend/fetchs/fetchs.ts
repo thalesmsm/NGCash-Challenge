@@ -50,7 +50,6 @@ export async function getTransactions(id: number, token: string){
         'Authorization': token
       }
     }).then((res) => {
-      // console.log(res.data);
       return res.data
     })
     .catch((error) => {
@@ -59,6 +58,41 @@ export async function getTransactions(id: number, token: string){
     return r;
   } catch (error) {
     console.log(error);
-    
+  }
+}
+
+export async function getCashOutTransactions(id: number, token: string){
+  try {
+    const r = await axios.get(`http://localhost:3001/transaction/out/${id}`, {
+      headers: {
+        'Authorization': token
+      }
+    }).then((res) => {
+      return res.data
+    })
+    .catch((error) => {
+      console.error(error)
+    });
+    return r;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getCashInTransactions(id: number, token: string){
+  try {
+    const r = await axios.get(`http://localhost:3001/transaction/in/${id}`, {
+      headers: {
+        'Authorization': token
+      }
+    }).then((res) => {
+      return res.data
+    })
+    .catch((error) => {
+      console.error(error)
+    });
+    return r;
+  } catch (error) {
+    console.log(error);
   }
 }
