@@ -39,6 +39,47 @@ class TransactionService {
 
     return transactions;
   }
+  public async getCashOutTransactions(debitedAccountId: number): Promise<ITransaction[]> {
+    const transactions = await this.transactionModel.findAll({
+       where: { 
+        debitedAccountId
+      },
+       include: [{
+        model: AccountModel,
+        as: 'debitedAccount',
+        attributes: ['balance'],
+      },
+      {
+        model: AccountModel,
+        as: 'creditedAccount',
+        attributes: ['balance'],
+      },
+      ],
+      });
+
+    return transactions;
+  }
+  
+  public async getCashInTransactions(debitedAccountId: number): Promise<ITransaction[]> {
+    const transactions = await this.transactionModel.findAll({
+       where: { 
+        creditedAccountId: debitedAccountId 
+      },
+       include: [{
+        model: AccountModel,
+        as: 'debitedAccount',
+        attributes: ['balance'],
+      },
+      {
+        model: AccountModel,
+        as: 'creditedAccount',
+        attributes: ['balance'],
+      },
+      ],
+      });
+
+    return transactions;
+  }
 }
 
 export default TransactionService;

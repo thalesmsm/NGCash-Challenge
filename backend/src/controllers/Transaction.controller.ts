@@ -46,6 +46,18 @@ class TransactionController {
 
     return res.status(200).json(transactions);
   }
+  public getCashOutTransactions = async (req: Request, res: Response) => {
+    const {id} = req.params;
+    const transactions = await this.transactionService.getCashOutTransactions(Number(id));
+
+    return res.status(200).json(transactions);
+  }
+  public getCashInTransactions = async (req: Request, res: Response) => {
+    const {id} = req.params;
+    const transactions = await this.transactionService.getCashInTransactions(Number(id));
+
+    return res.status(200).json(transactions);
+  }
 }
 
 export default TransactionController;
