@@ -37,7 +37,8 @@ const Login: React.FC = () => {
     setPassword(newValue);
   }
   
-  const handleClickEntrar = async () => {
+  const handleClickEntrar = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const findUser: IUser | undefined = users?.find((user: {
       username: string | undefined, password: string | undefined
     }) => user.username === username);
@@ -98,7 +99,10 @@ const Login: React.FC = () => {
           <div className="hidden lg:block md:block md:w-[530px] md:h-[530px]">
             <Image src="/transfer-money.svg" width={530} height={530} alt="ng Logo"/>
           </div>
-          <form className="flex flex-col justify-center bg-white/60 shadow-md rounded-lg px-8 md:w-[400px] h-[480px]">
+          <form
+            className="flex flex-col justify-center bg-white/60 shadow-md rounded-lg px-8 md:w-[400px] h-[480px]"
+            onSubmit={handleClickEntrar}
+            >
             <div className="mb-6">
               <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="username">
                 Username
@@ -123,23 +127,16 @@ const Login: React.FC = () => {
                 onChange={handleChangePassword}
               />
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col items-center justify-around h-20">
               <button
-                className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded w-1/2 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-700"
-                type="button"
-                onClick={handleClickEntrar}
+                className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded w-52 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-700"
+                type="submit"
+                // onClick={handleClickEntrar}
                 >
                 Entrar
-              </button>
-              <Link href="/register">
-                <button
-                  className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded w-40 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-700"
-                  type="button"
-                  >
-                  Cadastrar
-                </button>
-              </Link>
+              </button>           
             </div>
+              <p className="text-decoration-none text-center text-white text-sm">Ainda não tem uma conta?<Link href="/register"> <span className="text-black hover:text-gray-700">Crie agora!</span></Link></p>
           </form>
         </div>
       </main>

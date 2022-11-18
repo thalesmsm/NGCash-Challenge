@@ -52,10 +52,11 @@ const Register = () => {
     return false;
   }
 
-  const handleClickCadastrar = () => {
+  const handleClickCadastrar = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (username && password && validateUsername() && validatePassword()) {
       postUser(username, password);
-      window.alert('Usuário criado com sucesso!');
+      // window.alert('Usuário criado com sucesso!');
       setUserCreated(true);
     }
     username && username.length >= 3 ? setIsUsernameValid(true) : setIsUsernameValid(false);
@@ -106,7 +107,10 @@ const Register = () => {
           <div className="hidden lg:block md:block md:w-[530px] md:h-[530px]">
             <Image src="/register-img.svg" width={530} height={530} alt="ng Logo"/>
           </div>
-          <form className="flex flex-col justify-center bg-white/60 shadow-md rounded-lg px-8 max-w-md md:w-[400px] h-[480px]">
+          <form
+            className="flex flex-col justify-center bg-white/60 shadow-md rounded-lg px-8 max-w-md md:w-[400px] h-[480px]"
+            onSubmit={handleClickCadastrar}
+            >
             {!userCreated ? 
              <div>
               <div className="mb-6">
@@ -134,12 +138,11 @@ const Register = () => {
                   onChange={handleChangePassword}
                 />
                 <p className={`${isPasswordValid ? "text-transparent" : "text-red-500"} text-xs italic`}>Sua senha deve conter: no mínimo 8 caracteres, um número e uma letra maiúscula.</p>
-              </div>
-              <div className="flex flex-col items-center justify-around h-20">
+                </div>
+                <div className="flex flex-col items-center justify-around h-20">
                 <button
                   className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded w-52 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-700"
-                  type="button"
-                  onClick={handleClickCadastrar}
+                  type="submit"
                   >
                   Cadastrar
                 </button>
@@ -147,7 +150,7 @@ const Register = () => {
               </div> : 
               <div className="flex flex-col justify-around items-center h-52">
                 <h1 className="text-2xl">Cadastro realizado com sucesso!</h1>
-                <p>Volte para página de login para entrar em sua conta.</p>
+                <p>Volte para página de login para acessar sua conta.</p>
                 <Link href="/">
                   <button className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded w-52 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-700">
                     Fazer login
@@ -156,7 +159,7 @@ const Register = () => {
               </div>
             }
               <Link href="/">
-                <p className={`${userCreated && 'hidden'} text-decoration-none text-center text-black hover:text-gray-700`}>Já tenho cadastro</p>
+                <p className={`${userCreated && 'hidden'} text-decoration-none text-center text-sm text-black hover:text-gray-700`}>Já tenho cadastro</p>
               </Link>
           </form>
         </div>
