@@ -13,6 +13,21 @@ export async function getUsers() {
   }
 }
 
+export async function login(username: string, password: string) {
+  try {
+    const {data}: any =  await axios.post('http://localhost:3001/login', {
+      username,
+      password,
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+    return data.token as string;
+  } catch (error) {
+    console.log(error);  
+  }
+}
+
 export async function postUser(username: string, password: string) {
   try {
     return await axios.post('http://localhost:3001/register', {
@@ -28,13 +43,20 @@ export async function postUser(username: string, password: string) {
   }
 }
 
-export async function getTransactions(id: string) {
+export async function getTransactions(id: number, token: string){
   try {
-    const {data}: any = await axios.get(`http://localhost:3001/transactions/all/${id}`)
-      .catch(function (error) {
-      console.error(error);
+    const r = await axios.get(`http://localhost:3001/transaction/all/${id}`, {
+      headers: {
+        'Authorization': token
+      }
+    }).then((res) => {
+      // console.log(res.data);
+      return res.data
+    })
+    .catch((error) => {
+      console.error(error)
     });
-    return data
+    return r;
   } catch (error) {
     console.log(error);
     

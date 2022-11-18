@@ -4,7 +4,7 @@ import { compare } from 'bcryptjs';
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { getUsers } from '../fetchs/fetchs';
+import { getUsers, login } from '../fetchs/fetchs';
 
 interface IUser {
   find(arg0: (user: { username: string | undefined; }) => boolean): unknown;
@@ -36,6 +36,12 @@ const Login: React.FC = () => {
     const newValue = e.currentTarget.value;
     setPassword(newValue);
   }
+
+  const setToken = async (username: string, password: string) => {
+    const token = await login(username, password).then((res) => res);
+    
+    token && localStorage.setItem('token', token);
+  }
   
   const handleClickEntrar = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,6 +54,7 @@ const Login: React.FC = () => {
       const comparePassword = await compare(password, findUser.password);
       localStorage.setItem('username', findUser.username);
       setuserlogged(findUser);
+      setToken(findUser.username, password);
       comparePassword && router.push('/account');
     } 
     if (!userlogged) window.alert('Usuário ou senha inválido');

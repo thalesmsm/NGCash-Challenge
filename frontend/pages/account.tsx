@@ -2,24 +2,52 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getUsers } from "../fetchs/fetchs";
+import { getTransactions, getUsers } from "../fetchs/fetchs";
 import IUser from "../interfaces/IUser";
+
+interface ITransaction {
+  id: number,
+  value: number,
+  debitedAccountId: number,
+  creditedAccountId: number,
+  createdAt: string,
+  debitedAccount: {
+    balance: number
+  },
+  creditedAccount: {
+    balance: number
+  }
+}
 
 const Account = () => {
   const [users, setUsers] = useState<IUser[]>();
+  const [username, setUsername] = useState<string>();
   const [userLogged, setUserLogged] = useState<IUser>();
+  const [transactions, setTransactions] = useState<ITransaction[]>();
 
   
-  useEffect( () => {
-    getUsers().then(res => setUsers(res));
-    const username = localStorage.getItem('username');
-    const findUser: IUser | undefined = users?.find((user: {
-      username: string | undefined, password: string | undefined
-    }) => user.username === username);
-    console.log(findUser?.account.balance);
-    
-    setUserLogged(findUser);
-  }, []);
+  useEffect(() => {
+    getUsers().then((res) => setUsers(res));
+    const setter = async () => {
+      const allUsers = await getUsers();
+      const findUser: IUser | undefined = allUsers.find((user: { username: string | undefined; }) => user.username === username);
+      setUserLogged(findUser);
+    }
+    setter();
+
+    const localUsername = localStorage.getItem('username');   
+    localUsername && setUsername(localUsername)
+
+  }, [username]);
+  
+  useEffect(() => {  
+    const token = localStorage.getItem('token');
+
+    if (userLogged && token)
+      getTransactions(userLogged.accountId, token).then((res) => setTransactions(res));
+
+  },[userLogged])
+
   return (
     <div>
       <Head>
@@ -43,17 +71,23 @@ const Account = () => {
           <table>
         <thead>
           <tr>
-            <th>Nome</th>
-            <th>Sobrenome</th>
-            <th>Email</th>
+            <th>Transação</th>
+            <th>Valor</th>
+            <th>data</th>
           </tr>
         </thead>
         <tbody>
-          {users?.map((user) => (
-            <tr key={ user.id }>
-              <td>{user.username}</td>
-              <td>{user.accountId}</td>
-              <td>20/12/1992</td>
+          {transactions?.map((transaction) => (
+            <tr key={ transaction.id }>
+              <td>aaaaaaaa</td>
+              <td className={`${userLogged?.accountId === transaction.debitedAccountId ? 'text-red-500' : 'text-blue-500'} `}>
+                {`${
+                  userLogged?.accountId === transaction.debitedAccountId ?
+                  `- R$ ${transaction.value.toFixed(2)}` :
+                  ` R$ ${transaction.value.toFixed(2)}`
+                }`}
+              </td>
+              <td>{transaction.createdAt}</td>
             </tr>
           ))}
         </tbody>
