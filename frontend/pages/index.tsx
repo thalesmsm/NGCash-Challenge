@@ -104,7 +104,7 @@ const Login: React.FC = () => {
             onSubmit={handleClickEntrar}
             >
             <div className="mb-6">
-              <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="username">
+              <label className="block text-gray-900 text-base font-bold mb-2" htmlFor="username">
                 Username
               </label>
               <input
@@ -116,7 +116,7 @@ const Login: React.FC = () => {
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="password">
+              <label className="block text-gray-900 text-base font-bold mb-2" htmlFor="password">
                 Senha
               </label>
               <input

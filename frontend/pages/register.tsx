@@ -114,7 +114,7 @@ const Register = () => {
             {!userCreated ? 
              <div>
               <div className="mb-6">
-                <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="username">
+                <label className="block text-gray-900 text-base font-bold mb-2" htmlFor="username">
                   Username
                 </label>
                 <input
@@ -127,7 +127,7 @@ const Register = () => {
                 <p className={`${isUsernameValid ? "text-transparent" : "text-red-500"} text-xs italic`}>Seu Username deve conter pelo menos 3 caracteres.</p>
               </div>
               <div className="mb-6">
-                <label className="block text-gray-900 text-sm font-bold mb-2" htmlFor="password">
+                <label className="block text-gray-900 text-base font-bold mb-2" htmlFor="password">
                   Senha
                 </label>
                 <input
