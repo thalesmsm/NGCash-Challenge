@@ -20,20 +20,18 @@ interface ITransaction {
 }
 
 const Account = () => {
-  const [users, setUsers] = useState<IUser[]>();
   const [username, setUsername] = useState<string>();
   const [userLogged, setUserLogged] = useState<IUser>();
   const [transactions, setTransactions] = useState<ITransaction[]>();
 
   
   useEffect(() => {
-    getUsers().then((res) => setUsers(res));
-    const setter = async () => {
+    const setUsers = async () => {
       const allUsers = await getUsers();
       const findUser: IUser | undefined = allUsers.find((user: { username: string | undefined; }) => user.username === username);
       setUserLogged(findUser);
     }
-    setter();
+    setUsers();
 
     const localUsername = localStorage.getItem('username');   
     localUsername && setUsername(localUsername)
@@ -46,7 +44,12 @@ const Account = () => {
     if (userLogged && token)
       getTransactions(userLogged.accountId, token).then((res) => setTransactions(res));
 
-  },[userLogged])
+  },[userLogged]);
+
+  const logOut = async () => {
+    localStorage.removeItem('username');
+    localStorage.removeItem('token');
+  }
 
   return (
     <div>
@@ -61,7 +64,14 @@ const Account = () => {
           <Image src="/logo-ngcash.svg" width={90} height={90} alt="ng Logo" />
           <div className="flex flex-col justify-between items-center h-14">
             <p>Saldo: <span>R$ {userLogged && userLogged.account.balance}</span></p>
-            <Link href="/"><p className="ml-4 bg-gradient-to-br from-gray-400 to-gray-600 text-white font-bold px-4 rounded hover:bg-gradient-to-br hover:from-gray-500 hover:to-gray-700">Sair</p></Link>
+            <Link href="/">
+              <button
+              className="ml-4 bg-gradient-to-br from-gray-400 to-gray-600 text-white font-bold px-4 rounded hover:bg-gradient-to-br hover:from-gray-500 hover:to-gray-700"
+              onClick={logOut}
+              >
+                Sair
+              </button>
+            </Link>
           </div>
         </div>
       </header>
@@ -79,8 +89,8 @@ const Account = () => {
         <tbody>
           {transactions?.map((transaction) => (
             <tr key={ transaction.id }>
-              <td>aaaaaaaa</td>
-              <td className={`${userLogged?.accountId === transaction.debitedAccountId ? 'text-red-500' : 'text-blue-500'} `}>
+              <td>{userLogged?.accountId === transaction.debitedAccountId ? 'Cash out' : 'Cash in'}</td>
+              <td className={`${userLogged?.accountId === transaction.debitedAccountId ? 'text-red-500' : 'text-green-500'} `}>
                 {`${
                   userLogged?.accountId === transaction.debitedAccountId ?
                   `- R$ ${transaction.value.toFixed(2)}` :
