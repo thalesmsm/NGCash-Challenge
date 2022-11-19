@@ -96,3 +96,24 @@ export async function getCashInTransactions(id: number, token: string){
     console.log(error);
   }
 }
+
+export async function postTransaction(debitedAccountId: number, creditedAccountId: number, value: number, token: string) {
+  try {
+    return await axios.post('http://localhost:3001/transaction', {
+      debitedAccountId,
+      creditedAccountId,
+      value
+    },
+    {
+      headers: {
+        'Authorization': token
+      }
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
