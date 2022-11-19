@@ -1,12 +1,12 @@
 const Footer = () => {
   return (
-    <div className="flex items-center justify-center py-8">
+    <div className="flex items-center justify-center absolute bottom-0 w-full mb-8">
       <p>&copy; Projeto criado por <a
-          className="text-white/60 hover:text-white"
+          className="text-white/60 text-center hover:text-white"
           href="https://www.linkedin.com/in/thalesmsm/"
           target="_blank" rel="noreferrer"
           >
-           Thales
+            Thales
         </a> para teste técnico da <a
           className="text-white/60 hover:text-white"
           href="https://ng.cash/"

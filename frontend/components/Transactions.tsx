@@ -89,7 +89,7 @@ const Transactions = () => {
   }
 
   return (
-    <div>
+    <div className="h-[100vh]">
       <header className="flex justify-between items-center border-b-[1px] py-4 px-4">
         {/* <div> */}
           <p className="text-lg">Olá, {userLogged?.username}!</p>
@@ -118,46 +118,48 @@ const Transactions = () => {
               <option value="cashIn">Cash in</option>
               <option value="cashOut">Cash out</option>
             </select>
-            <div>
+            {/* <div>
               <label htmlFor="diaa"></label>
               <input
                 type="date"
                 id="diaa"
                 // onChange={handleDate}
               />
-            </div>
+            </div> */}
           </div>
           {transactions?.length === 0 ? 
             <p className="text-gray-200">Nenhuma transação foi esfetuada até o momento!</p> :
-            <table className="border-collapse w-[100vw] text-center md:w-[350px] lg:w-[450px] lg:max-w-xl">
-            <thead>
-              <tr className="border-b-2 bg-gradient-to-b from-gray-400/30 to-gray-600/30 text-lg">
-                <th className="border-r-[1px] p-2">Transação</th>
-                <th className="border-r-[1px] p-2">Valor</th>
-                <th className="p-2">Data</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions?.map((transaction) => (
-                <tr
-                  key={transaction.id}
-                  className="border-b-[1px] hover:bg-gray-500 text-gray-200"
-                >
-                  <td className="border-r-[1px] font-bold p-2">
-                    {userLogged?.accountId === transaction.debitedAccountId ? 'Cash out' : 'Cash in'}
-                  </td>
-                  <td className={`${userLogged?.accountId === transaction.debitedAccountId ? 'text-red-500' : 'text-green-500'} border-r-[1px] text-lg font-bold p-2`}>
-                    {`${userLogged?.accountId === transaction.debitedAccountId ?
-                        ` R$ ${transaction.value.toFixed(2)}` :
-                        ` R$ ${transaction.value.toFixed(2)}`}`}
-                  </td>
-                  <td className="p-2 font-bold">
-                    {(transaction.createdAt.slice(0, 10).split('-').reverse().join('/'))}
-                  </td>
+            <div className="h-[500px] overflow-auto">
+              <table className="border-collapse w-[100vw] text-center md:w-[350px] lg:w-[450px] lg:max-w-xl">
+              <thead>
+                <tr className="border-b-2 bg-gradient-to-b from-gray-400/30 to-gray-600/30 text-lg">
+                  <th className="border-r-[1px] p-2">Transação</th>
+                  <th className="border-r-[1px] p-2">Valor</th>
+                  <th className="p-2">Data</th>
                 </tr>
-              ))}
-            </tbody>
-            </table>
+              </thead>
+              <tbody>
+                {transactions?.map((transaction) => (
+                  <tr
+                    key={transaction.id}
+                    className="border-b-[1px] hover:bg-gray-500 text-gray-200"
+                  >
+                    <td className="border-r-[1px] font-bold p-2">
+                      {userLogged?.accountId === transaction.debitedAccountId ? 'Cash out' : 'Cash in'}
+                    </td>
+                    <td className={`${userLogged?.accountId === transaction.debitedAccountId ? 'text-red-500' : 'text-green-500'} border-r-[1px] text-lg font-bold p-2`}>
+                      {`${userLogged?.accountId === transaction.debitedAccountId ?
+                          ` R$ ${transaction.value.toFixed(2)}` :
+                          ` R$ ${transaction.value.toFixed(2)}`}`}
+                    </td>
+                    <td className="p-2 font-bold">
+                      {(transaction.createdAt.slice(0, 10).split('-').reverse().join('/'))}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              </table>
+            </div>
           }
           
         </section>
