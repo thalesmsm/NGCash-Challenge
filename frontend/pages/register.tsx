@@ -109,9 +109,10 @@ const Register = () => {
             <Image src="/register-img.svg" width={530} height={530} alt="ng Logo"/>
           </div>
           <form
-            className="flex flex-col justify-center bg-white/60 shadow-md rounded-lg px-8 max-w-md md:w-[400px] h-[480px]"
+            className="flex flex-col justify-around bg-white/60 shadow-md rounded-lg px-8 max-w-md md:w-[400px] h-[480px]"
             onSubmit={handleClickCadastrar}
             >
+            <h1 className="font-semibold text-5xl text-gray-900 font-poppins">Cadastro</h1>
             {!userCreated ? 
              <div>
               <div className="mb-6">
@@ -141,12 +142,15 @@ const Register = () => {
                 <p className={`${isPasswordValid ? "text-transparent" : "text-red-500"} text-xs italic`}>Sua senha deve conter: no mínimo 8 caracteres, um número e uma letra maiúscula.</p>
                 </div>
                 <div className="flex flex-col items-center justify-around h-20">
-                <button
-                  className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded w-52 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-700"
-                  type="submit"
-                  >
-                  Cadastrar
-                </button>
+                  <button
+                    className="bg-gradient-to-br from-gray-900 to-gray-800 text-white font-bold py-2 px-4 rounded w-52 hover:bg-gradient-to-br hover:from-gray-800 hover:to-gray-700"
+                    type="submit"
+                    >
+                    Cadastrar
+                  </button>
+                  <Link href="/">
+                    <p className={`${userCreated && 'hidden'} text-decoration-none text-center text-sm text-black hover:text-gray-700`}>Já tenho cadastro</p>
+                  </Link>
                 </div>
               </div> : 
               <div className="flex flex-col justify-around items-center h-52">
@@ -159,9 +163,6 @@ const Register = () => {
                 </Link>
               </div>
             }
-              <Link href="/">
-                <p className={`${userCreated && 'hidden'} text-decoration-none text-center text-sm text-black hover:text-gray-700`}>Já tenho cadastro</p>
-              </Link>
           </form>
         </div>
       </main>
