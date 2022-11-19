@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Footer from "../components/Footer";
 import Transactions from "../components/Transactions";
 
 const Account = () => {
@@ -11,6 +12,7 @@ const Account = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Transactions />
+      <Footer />
     </div>
   );
 }

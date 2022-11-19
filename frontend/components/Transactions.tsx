@@ -8,21 +8,8 @@ import {
   getUsers,
   postTransaction
 } from "../fetchs/fetchs";
+import ITransaction from "../interfaces/ITransaction";
 import IUser from "../interfaces/IUser";
-
-interface ITransaction {
-  id: number,
-  value: number,
-  debitedAccountId: number,
-  creditedAccountId: number,
-  createdAt: string,
-  debitedAccount: {
-    balance: number
-  },
-  creditedAccount: {
-    balance: number
-  }
-}
 
 const Transactions = () => {
   const [allUSers, setallUSers] = useState<IUser[]>();
