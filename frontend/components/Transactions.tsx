@@ -77,15 +77,30 @@ const Transactions = () => {
     setCredited(e.currentTarget.value)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     const token = localStorage.getItem('token');
     const creditedAccount = allUSers?.find((user) => user.username === credited);
-    console.log(userLogged?.accountId);
-    console.log(creditedAccount?.accountId);
+
+    if (!creditedAccount) {
+      e.preventDefault();
+      return window.alert('Por favor, selecione alguém para fazer a transaferência!')
+    }
     
+    if (creditedValue && userLogged && creditedValue > userLogged?.account.balance) {
+      return window.alert('Saldo insuficiente')
+    }
+
+    if (creditedValue === 0 || creditedValue === undefined) {
+      e.preventDefault();
+      return window.alert('O valor da transferência não pode ser 0');
+    }
     
-    userLogged && creditedAccount && creditedValue && token && postTransaction(userLogged?.accountId, creditedAccount?.accountId, creditedValue, token);
+    if (userLogged && creditedAccount && creditedValue && token) {
+      postTransaction(userLogged?.accountId, creditedAccount?.accountId, creditedValue, token);
+      return window.alert('Transferência realizada com succeso!')
+    }
   }
+
   return (
     <div>
       <header className="flex justify-between items-center border-b-[1px] py-4 px-4">
@@ -103,7 +118,6 @@ const Transactions = () => {
               </button>
             </Link>
           </div>
-        {/* </div> */}
       </header>
       <main className="md:flex md:justify-around">
         <section className="flex flex-col items-center mt-5">
@@ -117,12 +131,22 @@ const Transactions = () => {
               <option value="cashIn">Cash in</option>
               <option value="cashOut">Cash out</option>
             </select>
+            <div>
+              <label htmlFor="diaa"></label>
+              <input
+                type="date"
+                id="diaa"
+                // onChange={handleDate}
+              />
+            </div>
           </div>
-          <table className="border-collapse w-[100vw] text-center md:w-[350px] lg:w-[450px] lg:max-w-xl">
+          {transactions?.length === 0 ? 
+            <p className="text-gray-200">Nenhuma transação foi esfetuada até o momento!</p> :
+            <table className="border-collapse w-[100vw] text-center md:w-[350px] lg:w-[450px] lg:max-w-xl">
             <thead>
               <tr className="border-b-2 bg-gradient-to-b from-gray-400/30 to-gray-600/30 text-lg">
-                <th className="border-r-[1px]  p-2">Transação</th>
-                <th className="border-r-[1px]  p-2">Valor</th>
+                <th className="border-r-[1px] p-2">Transação</th>
+                <th className="border-r-[1px] p-2">Valor</th>
                 <th className="p-2">Data</th>
               </tr>
             </thead>
@@ -130,23 +154,25 @@ const Transactions = () => {
               {transactions?.map((transaction) => (
                 <tr
                   key={transaction.id}
-                  className="border-b-[1px] hover:bg-gray-500"
+                  className="border-b-[1px] hover:bg-gray-500 text-gray-200"
                 >
                   <td className="border-r-[1px] font-bold p-2">
                     {userLogged?.accountId === transaction.debitedAccountId ? 'Cash out' : 'Cash in'}
                   </td>
                   <td className={`${userLogged?.accountId === transaction.debitedAccountId ? 'text-red-500' : 'text-green-500'} border-r-[1px] text-lg font-bold p-2`}>
                     {`${userLogged?.accountId === transaction.debitedAccountId ?
-                        `- R$ ${transaction.value.toFixed(2)}` :
+                        ` R$ ${transaction.value.toFixed(2)}` :
                         ` R$ ${transaction.value.toFixed(2)}`}`}
                   </td>
-                  <td className="p-2">
+                  <td className="p-2 font-bold">
                     {(transaction.createdAt.slice(0, 10).split('-').reverse().join('/'))}
                   </td>
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          }
+          
         </section>
         <section>
           <form onSubmit={handleSubmit}>

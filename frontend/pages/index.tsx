@@ -55,11 +55,10 @@ const Login: React.FC = () => {
       localStorage.setItem('username', findUser.username);
       setuserlogged(findUser);
       setToken(findUser.username, password);
-      comparePassword && router.push('/account');
+      return comparePassword && router.push('/account');
     } 
     if (!userlogged) window.alert('Usuário ou senha inválido');
 
-    // ALERT ACIOANDO ANTES DE DAR O PUSH EM /ACCOUNT
   }
 
   return (
