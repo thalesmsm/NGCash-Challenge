@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  database:
+    image: postgres:15-alpine
+    container_name: db_container
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=example
+    platform: linux/x86_64
+
+  api:
+    build: ./backend
+    container_name: api_container
+    ports:
+      - 3001:3001
+    depends_on:
+      - database
+    volumes:
+      - ./backend:/app-ngback
+    platform: linux/x86_64
+
+  web:
+    build: ./frontend
+    container_name: web_container
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+    volumes:
+      - ./frontend:/app-ngfront
+    platform: linux/x86_64
