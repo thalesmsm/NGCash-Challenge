@@ -51,15 +51,15 @@ const Login: React.FC = () => {
       username: string | undefined, password: string | undefined
     }) => user.username === username);
     
-    
     if (findUser && password) {
       const comparePassword = await compare(password, findUser.password);
+      !comparePassword && window.alert('Usuário ou senha inválido');
       localStorage.setItem('username', findUser.username);
       setuserlogged(findUser);
       setToken(findUser.username, password);
       return comparePassword && router.push('/account');
     } 
-    if (!userlogged) window.alert('Usuário ou senha inválido');
+    if (!userlogged) return window.alert('Usuário ou senha inválido');
 
   }
 
