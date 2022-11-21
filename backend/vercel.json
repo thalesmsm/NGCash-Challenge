@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": 1,
+  "public": true,
+  "build": {
+    "src" :"src/index.ts",
+    "use": "@vercel/node"
+  },
+  "routes": [
+    {
+      "src": "/(.*)*",
+      "dest": "src/index.js"
+    }
+  ]
+
+}
