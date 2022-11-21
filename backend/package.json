@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+  "egines": {
+    "node": "16-x"
+  },
   "scripts": {
     "start": "npm run build && node ./dist/index.js",
-    "dev": "tsnd ./src/index.ts",
-    "build": "tsc"
+    "dev": "tsnd ./src/index.ts"
   },
   "keywords": [],
   "author": "",
