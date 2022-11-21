@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": 1,
+  "version": 2,
   "public": true,
   "build": {
     "src" :"src/index.ts",
