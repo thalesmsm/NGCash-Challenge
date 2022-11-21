@@ -2,8 +2,6 @@
 
 Projeto como objetivo de estruturar uma aplicação web fullstack, dockerizada, cujo objetivo seja possibilitar que usuários da NG consigam realizar transferências internas entre si.
 
-## INTRUÇÕES PARA RODAR O PROJETO LOCALMENTE
-
 O diretório raiz é composto por dois sub-diretórios, sendo eles backend e frontend.
 Para rodar cada aplicação (backend e frontend) é necessário estar dentro do diretório específico de cada uma delas e seguir os passos:
 
@@ -71,6 +69,7 @@ npm run dev
 ## INTRUÇÕES PARA RODAR O PROJETO COM DOCKER
 
 1. Primeiramente serão criados os container para o banco de dados, aplicação backend e fontend.
+Rode o comando abaixo na pasta raiz do projeto.
 ```bash
 docker-compose up --build
 ```
