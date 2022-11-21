@@ -86,3 +86,7 @@ npx sequelize-cli db:create
 npx sequelize-cli db:migrate
 npx sequelize-cli db:seed:all
 ```
+
+## Aplicação em funcionamento
+
+https://user-images.githubusercontent.com/98064558/203138164-abb1776a-2919-4815-81d1-965671ea14a1.mp4
