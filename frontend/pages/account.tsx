@@ -12,7 +12,6 @@ const Account = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Transactions />
-      <Footer />
     </div>
   );
 }

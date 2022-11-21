@@ -18,6 +18,7 @@ const Transactions = () => {
   const [transactions, setTransactions] = useState<ITransaction[]>();
   const [credited, setCredited] = useState<string>();
   const [creditedValue, setCreditedValue] = useState<number>();
+  const [date, setDate] = useState<ITransaction[]>();
   
   useEffect(() => {
     getUsers().then((res) => setallUSers(res))
@@ -36,9 +37,12 @@ const Transactions = () => {
   useEffect(() => {  
     const token = localStorage.getItem('token');
   
-    if (userLogged && token)
+    if (userLogged && token) {
       getTransactions(userLogged.accountId, token).then((res) => setTransactions(res));
-  },[userLogged]);
+
+      !date && getTransactions(userLogged.accountId, token).then((res) => setDate(res));
+    }
+  },[userLogged, date]);
   
   const logOut = async () => {
     localStorage.removeItem('username');
@@ -49,14 +53,25 @@ const Transactions = () => {
     const token = localStorage.getItem('token');
     if (userLogged && token) {
       if (e.currentTarget.value === 'todas') {
-        getTransactions(userLogged.accountId, token).then((res) => setTransactions(res));
+        getTransactions(userLogged.accountId, token).then((res) => setDate(res));
       }
       if (e.currentTarget.value === 'cashIn') {
-        getCashInTransactions(userLogged.accountId, token).then((res) => setTransactions(res));
+        getCashInTransactions(userLogged.accountId, token).then((res) => setDate(res));
       }
       if (e.currentTarget.value === 'cashOut') {
-        getCashOutTransactions(userLogged.accountId, token).then((res) => setTransactions(res));
+        getCashOutTransactions(userLogged.accountId, token).then((res) => setDate(res));
       }
+    }
+  }
+
+  const handleDate = (e: React.FormEvent<HTMLInputElement>) => {
+    const formatDate = e.currentTarget.value.slice(0, 10).split('-').reverse().join('/');
+ 
+    if (transactions) {
+      const filterByDate = transactions
+        .filter((transaction) => transaction.createdAt.slice(0, 10).split('-').reverse().join('/') === formatDate); 
+      
+      filterByDate.length === 0 ? window.alert('Sem transações para esta data') : setDate(filterByDate);
     }
   }
 
@@ -108,24 +123,30 @@ const Transactions = () => {
       </header>
       <main className="md:flex md:justify-around">
         <section className="flex flex-col items-center mt-5">
-          <div className="flex justify-between items-center w-[100vw] mb-5 md:justify-center md:w-[350px] lg:w-[450px] lg:max-w-xl">
-            <h1 className="text-xl align-middle font-bold md:mr-12">Transaferências</h1>
-            <select
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-zinc-400 focus:border-zinc-500 block p-2.5"
-              onChange={handleSelectTransactions}
-            >
-              <option value="todas">Todas</option>
-              <option value="cashIn">Cash in</option>
-              <option value="cashOut">Cash out</option>
-            </select>
-            {/* <div>
-              <label htmlFor="diaa"></label>
+          <h1 className="text-xl align-middle font-bold md:mr-12">Transaferências</h1>
+          <div className="flex justify-between items-center w-[100vw] mb-5 md:justify-around md:w-[350px] lg:w-[450px] lg:max-w-xl">
+            <div>
+              <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="trans">Transação</label>
+              <select
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-zinc-400 focus:border-zinc-500 block p-2.5"
+                onChange={handleSelectTransactions}
+                id="trans"
+              >
+                <option >Selecionar</option>
+                <option value="todas">Todas</option>
+                <option value="cashIn">Cash in</option>
+                <option value="cashOut">Cash out</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="dia">Data</label>
               <input
                 type="date"
-                id="diaa"
-                // onChange={handleDate}
+                id="dia"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-zinc-400 focus:border-zinc-500 block p-2.5"
+                onChange={handleDate}
               />
-            </div> */}
+            </div>
           </div>
           {transactions?.length === 0 ? 
             <p className="text-gray-200">Nenhuma transação foi esfetuada até o momento!</p> :
@@ -139,7 +160,7 @@ const Transactions = () => {
                 </tr>
               </thead>
               <tbody>
-                {transactions?.map((transaction) => (
+                {date?.map((transaction) => (
                   <tr
                     key={transaction.id}
                     className="border-b-[1px] hover:bg-gray-500 text-gray-200"
@@ -170,7 +191,7 @@ const Transactions = () => {
               <div className="flex w-full max-w-xl">
                 <div className="flex flex-col items-center w-1/2">
                   <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="valor">
-                    Valor
+                    Valor:
                   </label>
                   <input
                     id="valor"
